@@ -1,7 +1,25 @@
+import prismadb from "@/lib/prismadb";
+import { auth } from "@clerk/nextjs";
+import { redirect } from "next/navigation";
 import React from "react";
+import { CreateNameCard } from "./components/create-name-card";
 
-type Props = {};
+export default async function Register() {
+  const { userId } = auth();
 
-export default function Register({}: Props) {
-  return <div>page</div>;
+  if (!userId) redirect("/sign-in");
+
+  const user = await prismadb.user.findUnique({
+    where: {
+      id: userId,
+    },
+  });
+
+  if (user) redirect("/");
+
+  return (
+    <div className="flex items-center justify-center h-screen">
+      <CreateNameCard />
+    </div>
+  );
 }

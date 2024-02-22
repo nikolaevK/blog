@@ -1,7 +1,9 @@
 "use client";
 
 import * as React from "react";
+import { useAuth } from "@clerk/nextjs";
 import Link from "next/link";
+import { UserButton } from "@clerk/nextjs";
 
 import { cn } from "@/lib/utils";
 
@@ -14,48 +16,49 @@ import {
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
-import { UserButton } from "@clerk/nextjs";
 import { ModeToggle } from "./mode-toggle";
+import { Button } from "./button";
 
 const components: { title: string; href: string; description: string }[] = [
-  {
-    title: "Alert Dialog",
-    href: "/docs/primitives/alert-dialog",
-    description:
-      "A modal dialog that interrupts the user with important content and expects a response.",
-  },
-  {
-    title: "Hover Card",
-    href: "/docs/primitives/hover-card",
-    description:
-      "For sighted users to preview content available behind a link.",
-  },
-  {
-    title: "Progress",
-    href: "/docs/primitives/progress",
-    description:
-      "Displays an indicator showing the completion progress of a task, typically displayed as a progress bar.",
-  },
-  {
-    title: "Scroll-area",
-    href: "/docs/primitives/scroll-area",
-    description: "Visually or semantically separates content.",
-  },
-  {
-    title: "Tabs",
-    href: "/docs/primitives/tabs",
-    description:
-      "A set of layered sections of content—known as tab panels—that are displayed one at a time.",
-  },
-  {
-    title: "Tooltip",
-    href: "/docs/primitives/tooltip",
-    description:
-      "A popup that displays information related to an element when the element receives keyboard focus or the mouse hovers over it.",
-  },
+  // {
+  //   title: "Alert Dialog",
+  //   href: "/docs/primitives/alert-dialog",
+  //   description:
+  //     "A modal dialog that interrupts the user with important content and expects a response.",
+  // },
+  // {
+  //   title: "Hover Card",
+  //   href: "/docs/primitives/hover-card",
+  //   description:
+  //     "For sighted users to preview content available behind a link.",
+  // },
+  // {
+  //   title: "Progress",
+  //   href: "/docs/primitives/progress",
+  //   description:
+  //     "Displays an indicator showing the completion progress of a task, typically displayed as a progress bar.",
+  // },
+  // {
+  //   title: "Scroll-area",
+  //   href: "/docs/primitives/scroll-area",
+  //   description: "Visually or semantically separates content.",
+  // },
+  // {
+  //   title: "Tabs",
+  //   href: "/docs/primitives/tabs",
+  //   description:
+  //     "A set of layered sections of content—known as tab panels—that are displayed one at a time.",
+  // },
+  // {
+  //   title: "Tooltip",
+  //   href: "/docs/primitives/tooltip",
+  //   description:
+  //     "A popup that displays information related to an element when the element receives keyboard focus or the mouse hovers over it.",
+  // },
 ];
 
 export function NavBar() {
+  const { userId } = useAuth();
   return (
     <>
       <nav className="hidden md:flex justify-between items-center p-4 ">
@@ -126,17 +129,34 @@ export function NavBar() {
         <div className="flex justify-center items-center gap-3">
           <ModeToggle />
           <UserButton afterSignOutUrl="/sign-in" />
+          {!userId && (
+            <Link href="/sign-in">
+              <Button variant="link" className="p-0">
+                Sign in
+              </Button>
+            </Link>
+          )}
         </div>
       </nav>
+
+      {/* Todo: Separate Mobile into second component */}
       <nav>
         <section className="fixed block w-full top-0 z-10 md:hidden border-b bg-white dark:bg-secondary">
-          <div className="flex items-center justify-between h-14 px-4">
+          <div className="flex items-center justify-between h-14 px-4 ">
             <div className="flex items-center justify-between gap-2 w-full">
               <ModeToggle />
               <UserButton afterSignOutUrl="/sign-in" />
+              {!userId && (
+                <Link href="/sign-in">
+                  <Button variant="link" className="p-0">
+                    Sign in
+                  </Button>
+                </Link>
+              )}
             </div>
           </div>
         </section>
+
         <section className="fixed block md:hidden bottom-0 w-full h-12 border-t z-10 bg-white dark:bg-secondary">
           <ul className="flex justify-between h-full items-center mx-6">
             {/* <Link href={`/${budgetId}`}>
