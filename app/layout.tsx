@@ -6,6 +6,7 @@ import { ClerkProvider } from "@clerk/nextjs";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import { ThemeProvider } from "@/components/ui/theme-provider";
+import { NavBar } from "@/components/ui/nav-bar";
 
 export const fontSans = FontSans({
   subsets: ["latin"],
@@ -37,6 +38,7 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
+            <NavBar />
             {children}
           </ThemeProvider>
         </body>

@@ -1,11 +1,9 @@
-import { Button } from "@/components/ui/button";
-import { ModeToggle } from "@/components/ui/mode-toggle";
+import LandingPage from "@/components/ui/landing-page";
 
 export default function Home() {
   return (
     <>
-      <ModeToggle />
-      <Button>Test</Button>
+      <LandingPage />
     </>
   );
 }
