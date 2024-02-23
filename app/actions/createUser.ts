@@ -11,12 +11,12 @@ export async function createUser(username: string) {
 
   if (!username) throw new Error("Username is required");
 
-  const user = await prismadb.user.create({
+  await prismadb.user.create({
     data: {
       id: userId,
       userName: username,
     },
   });
 
-  redirect("/");
+  redirect("/admin");
 }

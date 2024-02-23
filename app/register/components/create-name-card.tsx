@@ -71,12 +71,12 @@ export function CreateNameCard() {
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <form onSubmit={submitUser}>
+        <form onSubmit={submitUser} id="userNameForm">
           <div className="flex flex-col space-y-1.5">
             <Label htmlFor="name">Username</Label>
             <Input
               id="name"
-              placeholder="Name of your project"
+              placeholder="Must be longer than 3 characters"
               value={usernameValue}
               onChange={createUserName}
             />
@@ -89,7 +89,7 @@ export function CreateNameCard() {
         />
       </CardContent>
       <CardFooter className="flex justify-between">
-        <Button className="w-full" disabled={!isValid}>
+        <Button form="userNameForm" className="w-full" disabled={!isValid}>
           Create
         </Button>
       </CardFooter>
