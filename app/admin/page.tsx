@@ -1,3 +1,3 @@
 export default async function Admin() {
-  return <div>Admin</div>;
+  return <div className="w-full">Admin</div>;
 }

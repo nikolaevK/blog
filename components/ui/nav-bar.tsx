@@ -8,7 +8,9 @@ export async function NavBar() {
     <>
       <NonMobileNavBar authorized={authorized} />
       {/* Mobile Navigation */}
-      <MobileNavBar authorized={authorized} />
+      <div className="pt-16 md:pt-0">
+        <MobileNavBar authorized={authorized} />
+      </div>
     </>
   );
 }

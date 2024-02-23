@@ -24,7 +24,7 @@ export default function LandingPage({}: Props) {
         <section className="w-full py-12 md:py-24 lg:py-32 border-t">
           <div className="container grid items-center gap-4 px-4 md:px-6">
             <Link
-              className="grid gap-2 p-4 rounded-lg border border-gray-200 border-gray-200 hover:shadow-md transition-colors dark:border-gray-800 dark:border-gray-800 dark:hover:shadow-md"
+              className="grid gap-2 p-4 rounded-lg border border-gray-200 hover:shadow-md transition-colors  dark:border-gray-800 dark:hover:shadow-md"
               href="#"
             >
               <div className="space-y-2">
@@ -41,7 +41,7 @@ export default function LandingPage({}: Props) {
               </p>
             </Link>
             <Link
-              className="grid gap-2 p-4 rounded-lg border border-gray-200 border-gray-200 hover:shadow-md transition-colors dark:border-gray-800 dark:border-gray-800 dark:hover:shadow-md"
+              className="grid gap-2 p-4 rounded-lg border border-gray-200  hover:shadow-md transition-colors  dark:border-gray-800 dark:hover:shadow-md"
               href="#"
             >
               <div className="space-y-2">
@@ -58,7 +58,7 @@ export default function LandingPage({}: Props) {
               </p>
             </Link>
             <Link
-              className="grid gap-2 p-4 rounded-lg border border-gray-200 border-gray-200 hover:shadow-md transition-colors dark:border-gray-800 dark:border-gray-800 dark:hover:shadow-md"
+              className="grid gap-2 p-4 rounded-lg border border-gray-200 hover:shadow-md transition-colors  dark:border-gray-800 dark:hover:shadow-md"
               href="#"
             >
               <div className="space-y-2">

@@ -11,7 +11,7 @@ export default async function DashboardLayout({
   return (
     <section>
       {/* Include shared UI here e.g. a header or sidebar */}
-      <div className="hidden md:flex min-h-screen w-full ">
+      <div className="inline md:flex min-h-screen w-full">
         <DashboardSideBar />
         {children}
       </div>

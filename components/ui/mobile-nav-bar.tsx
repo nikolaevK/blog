@@ -6,6 +6,7 @@ import { LayoutDashboard } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React from "react";
+import AdminDropdownMenuMobile from "./admin-dropdown-menu-mobile";
 
 import { Button } from "./button";
 import { ModeToggle } from "./mode-toggle";
@@ -16,16 +17,25 @@ export default function MobileNavBar({ authorized }: { authorized: boolean }) {
     <nav>
       <section className="fixed block w-full top-0 z-10 md:hidden border-b bg-white dark:bg-secondary">
         <div className="flex items-center justify-between h-14 px-4 ">
-          <div className="flex items-center justify-between gap-2 w-full">
-            <ModeToggle />
-            <UserButton afterSignOutUrl="/sign-in" />
-            {!authorized && (
-              <Link href="/sign-in">
-                <Button variant="link" className="p-0">
-                  Sign in
-                </Button>
-              </Link>
+          <div
+            className={`flex items-center ${
+              pathname.includes("/admin") ? "justify-between" : "justify-end"
+            } gap-2 w-full`}
+          >
+            {authorized && pathname.includes("/admin") && (
+              <AdminDropdownMenuMobile />
             )}
+            <div className="flex justify-center items-center gap-2">
+              <ModeToggle />
+              <UserButton afterSignOutUrl="/sign-in" />
+              {!authorized && (
+                <Link href="/sign-in">
+                  <Button variant="link" className="p-0">
+                    Sign in
+                  </Button>
+                </Link>
+              )}
+            </div>
           </div>
         </div>
       </section>
