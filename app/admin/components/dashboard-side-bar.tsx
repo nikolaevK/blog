@@ -2,14 +2,7 @@
 
 import Link from "next/link";
 
-import {
-  FolderIcon,
-  HomeIcon,
-  Package2Icon,
-  PlusSquareIcon,
-  TagIcon,
-  UsersIcon,
-} from "lucide-react";
+import { HomeIcon, Package2Icon, PlusSquareIcon } from "lucide-react";
 import { usePathname } from "next/navigation";
 
 type Props = {};
