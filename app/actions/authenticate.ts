@@ -2,7 +2,6 @@
 
 import prismadb from "@/lib/prismadb";
 import { auth } from "@clerk/nextjs";
-import { redirect } from "next/navigation";
 
 export default async function authenticate() {
   const { userId } = auth();
@@ -12,8 +11,6 @@ export default async function authenticate() {
       id: userId ? userId : undefined,
     },
   });
-
-  if (userId && !user) redirect("/register");
 
   return user && userId ? true : false;
 }

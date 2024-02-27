@@ -17,6 +17,7 @@ datasource db {
 model User {
   id String @id @unique
   userName String @unique
+  imageUrl String 
   posts Post[] @relation("PostToUserRelationship")
   createdAt DateTime @default(now())
   updatedAt   DateTime  @updatedAt

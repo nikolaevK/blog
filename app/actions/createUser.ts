@@ -1,7 +1,7 @@
 "use server";
 
 import prismadb from "@/lib/prismadb";
-import { auth } from "@clerk/nextjs";
+import { auth, clerkClient } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
 
 export async function createUser(username: string) {
@@ -11,10 +11,13 @@ export async function createUser(username: string) {
 
   if (!username) throw new Error("Username is required");
 
+  const { imageUrl } = await clerkClient.users.getUser(userId);
+
   await prismadb.user.create({
     data: {
       id: userId,
       userName: username,
+      imageUrl,
     },
   });
 

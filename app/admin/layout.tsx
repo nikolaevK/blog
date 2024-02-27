@@ -1,3 +1,4 @@
+import { redirect } from "next/navigation";
 import authenticate from "../actions/authenticate";
 import DashboardSideBar from "./components/dashboard-side-bar";
 
@@ -6,15 +7,18 @@ export default async function DashboardLayout({
 }: {
   children: React.ReactNode;
 }) {
-  await authenticate();
+  const user = await authenticate();
 
-  return (
-    <section>
-      {/* Include shared UI here e.g. a header or sidebar */}
-      <div className="inline md:flex min-h-screen w-full">
-        <DashboardSideBar />
-        {children}
-      </div>
-    </section>
-  );
+  if (!user) redirect("/register");
+
+  if (user)
+    return (
+      <section>
+        {/* Include shared UI here e.g. a header or sidebar */}
+        <div className="inline md:flex min-h-screen w-full">
+          <DashboardSideBar />
+          {children}
+        </div>
+      </section>
+    );
 }

@@ -9,14 +9,6 @@ export default async function Register() {
 
   if (!userId) redirect("/sign-in");
 
-  const user = await prismadb.user.findUnique({
-    where: {
-      id: userId,
-    },
-  });
-
-  if (user) redirect("/");
-
   return (
     <div className="flex items-center justify-center h-screen">
       <CreateNameCard />
