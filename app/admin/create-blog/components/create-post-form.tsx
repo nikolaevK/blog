@@ -8,6 +8,7 @@ import { z } from "zod";
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -18,28 +19,37 @@ import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Input } from "@/components/ui/input";
+import { createPost } from "@/app/actions/createPost";
 
 const formSchema = z.object({
+  title: z.string().min(5, {
+    message: "Title needs to be at least 5 characters.",
+  }),
   content: z
     .string()
     .min(10, {
-      message: "content is too short",
+      message: "Content should be at least 10 characters.",
     })
-    .max(20000, {
-      message: "content is too long",
+    .max(2460, {
+      message: "Content is limited to 2500 words.",
     }),
   images: z.object({ url: z.string() }).array(),
   published: z.boolean(),
 });
 
+export type CreatePostFormType = z.infer<typeof formSchema>;
+
 type Props = {};
 
 export default function CreatePostForm({}: Props) {
   const [preview, setPreview] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-  const form = useForm<z.infer<typeof formSchema>>({
+  const form = useForm<CreatePostFormType>({
     resolver: zodResolver(formSchema),
     defaultValues: {
+      title: "",
       content: "",
       images: [],
       published: false,
@@ -47,9 +57,19 @@ export default function CreatePostForm({}: Props) {
     mode: "onChange",
   });
 
+  async function submitPost(fields: CreatePostFormType) {
+    try {
+      setLoading(true);
+      await createPost(fields);
+      setLoading(false);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(() => {})} className="h-full w-full">
+      <form onSubmit={form.handleSubmit(submitPost)} className="h-full w-full">
         <FormField
           control={form.control}
           // This allows Input field to have current store's name
@@ -59,7 +79,7 @@ export default function CreatePostForm({}: Props) {
               <FormControl>
                 <ImageUpload
                   urls={field.value.map((image) => image.url)}
-                  disabled={undefined}
+                  disabled={loading}
                   onChange={(url) => field.onChange([...field.value, { url }])}
                   onRemove={(url) =>
                     field.onChange(
@@ -73,14 +93,31 @@ export default function CreatePostForm({}: Props) {
           )}
         />
 
+        <FormField
+          control={form.control}
+          name="title"
+          render={({ field }) => (
+            <FormItem className="mb-4">
+              <FormLabel className="text-lg">Title of article</FormLabel>
+              <FormControl>
+                <Input placeholder="write here" {...field} disabled={loading} />
+              </FormControl>
+              <FormDescription>
+                This is going to be title of an article.
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
         {/* MarkDown  */}
         {preview && (
           <>
             <label className="text-lg font-medium">Content</label>
             <Card className="w-full h-full mt-2">
               <CardContent className="flex flex-col items-center gap-4 p-6">
-                <div className="min-h-[278px] md:min-h-[516px]">
-                  <ReactMarkdown className="prose-sm md:prose lg:prose-xl dark:prose-invert ">
+                <div className="min-h-[278px] md:min-h-[516px] w-full">
+                  <ReactMarkdown className="prose lg:prose-xl dark:prose-invert">
                     {form.watch("content")}
                   </ReactMarkdown>
                 </div>
@@ -101,6 +138,7 @@ export default function CreatePostForm({}: Props) {
                     placeholder="Share with your knowledge here..."
                     className="min-h-[250px] md:min-h-[500px]"
                     {...field}
+                    disabled={loading}
                   />
                 </FormControl>
                 <FormMessage />
@@ -116,6 +154,7 @@ export default function CreatePostForm({}: Props) {
                   <Checkbox
                     checked={field.value}
                     onCheckedChange={field.onChange}
+                    disabled={loading}
                   />
                 </FormControl>
                 <div className="flex items-center space-y-1 leading-none">
@@ -127,20 +166,21 @@ export default function CreatePostForm({}: Props) {
             )}
           />
         </div>
+        <div className="flex flex-col mt-4 gap-2">
+          <Button
+            type="button"
+            className="w-full"
+            variant="secondary"
+            onClick={() => setPreview((prev) => !prev)}
+            disabled={loading}
+          >
+            {preview ? "Edit" : "Preview"}
+          </Button>
+          <Button className="w-full" disabled={loading}>
+            Post
+          </Button>
+        </div>
       </form>
-
-      <div className="flex flex-col mt-4 gap-2">
-        <Button
-          className="w-full"
-          variant="secondary"
-          onClick={() => setPreview((prev) => !prev)}
-        >
-          {preview ? "Edit" : "Preview"}
-        </Button>
-        <Button className="w-full" onClick={() => setPreview((prev) => !prev)}>
-          Post
-        </Button>
-      </div>
     </Form>
   );
 }

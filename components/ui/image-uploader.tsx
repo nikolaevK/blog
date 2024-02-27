@@ -43,7 +43,9 @@ export default function ImageUpload({
     <Card className="w-full mb-4">
       <CardHeader className="pb-4">
         <CardTitle className="text-lg">Upload a Photo</CardTitle>
-        <CardDescription>Select a photo from your device</CardDescription>
+        <CardDescription>
+          Select a photo from your device and paste a link into markdown
+        </CardDescription>
         <CldUploadWidget uploadPreset="ylc5z4ea" onUpload={onUpload}>
           {({ open }) => {
             function handleOnClick() {
