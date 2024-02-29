@@ -18,6 +18,9 @@ model User {
   id String @id @unique
   userName String @unique
   imageUrl String 
+  description String? @db.VarChar(150)
+  linkedInLink String? @db.VarChar(50)
+  githubLink String? @db.VarChar(50)
   posts Post[] @relation("PostToUserRelationship")
   createdAt DateTime @default(now())
   updatedAt   DateTime  @updatedAt

@@ -32,7 +32,7 @@ export default async function UsersPage({
     }),
   ]);
   return (
-    <section className="p-6">
+    <section className="p-6 mb-8 md:mb-0">
       <Card>
         <CardHeader>{user && <UserProfile user={user} />}</CardHeader>
         <CardContent>

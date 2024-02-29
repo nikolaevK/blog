@@ -47,7 +47,7 @@ export default function MobileNavBar({ authorized }: { authorized: boolean }) {
               <LayoutDashboard
                 className={cn(
                   "h-8 w-8",
-                  pathname === "/admin"
+                  pathname === "/admin" || pathname === "/admin/create-blog"
                     ? "text-black dark:text-white"
                     : "text-muted-foreground"
                 )}
