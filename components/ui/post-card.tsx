@@ -1,3 +1,4 @@
+import { auth } from "@clerk/nextjs";
 import { Post, User } from "@prisma/client";
 import { formatRelative } from "date-fns";
 import { CalendarIcon, HeartIcon, MessageCircleIcon } from "lucide-react";
@@ -12,12 +13,14 @@ interface PostCardInterface {
 }
 
 export default function PostCard({ post, user }: PostCardInterface) {
+  const { userId } = auth();
+  const admin = userId === user.id;
   return (
     <Card className="w-full">
       <CardContent className="p-6">
         <div className="space-y-4">
           <div className="flex items-center space-x-2">
-            <div className="flex items-center space-x-2">
+            <div className="flex items-center space-x-2 mb-4">
               <Image
                 alt="Avatar"
                 className="rounded-full"
@@ -30,16 +33,19 @@ export default function PostCard({ post, user }: PostCardInterface) {
                 width={40}
               />
               <div className="flex flex-col justify-center items-start">
-                <div className="text-sm font-medium">@{user.userName}</div>
+                <Link href={`/${user.userName}`}>
+                  <div className="text-sm font-medium">@{user.userName}</div>
+                </Link>
 
-                {/* TODO: Create Datefns dates */}
                 <span className="text-sm text-muted-foreground">
                   {formatRelative(new Date(post.createdAt), new Date())}
                 </span>
               </div>
             </div>
           </div>
-          <h2 className="md:text-2xl font-bold">{post.title}</h2>
+          <Link href={`/${user.userName}/${post.slug}`}>
+            <h2 className="md:text-2xl font-bold">{post.title}</h2>
+          </Link>
 
           <div className="flex items-center space-x-2 text-sm">
             <HeartIcon className="w-4 h-4" />
@@ -53,11 +59,29 @@ export default function PostCard({ post, user }: PostCardInterface) {
         <CardFooter className="p-6">
           <div className="flex items-center space-x-2">
             <Link href={`/${user.userName}/${post.slug}`}>
-              <Button size="lg">Read</Button>
+              <Button>Read</Button>
             </Link>
-            <Button variant={"secondary"} size="lg">
-              Edit
-            </Button>
+            {admin && (
+              <Link href={`/admin/edit-post/${post.slug}`}>
+                <Button variant={"secondary"}>Edit</Button>
+              </Link>
+            )}
+            {admin &&
+              (post.published ? (
+                <Button
+                  variant={"outline"}
+                  className="text-green-400 text-xs border-green-400 "
+                >
+                  Published
+                </Button>
+              ) : (
+                <Button
+                  variant={"outline"}
+                  className="text-destructive text-xs border-destructive"
+                >
+                  Unpublished
+                </Button>
+              ))}
           </div>
         </CardFooter>
       </div>
