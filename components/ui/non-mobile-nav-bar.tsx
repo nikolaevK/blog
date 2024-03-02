@@ -71,6 +71,13 @@ export default function NonMobileNavBar({
               </Link>
             </NavigationMenuItem>
           )}
+          <NavigationMenuItem>
+            <Link href="/posts" legacyBehavior passHref>
+              <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                Posts
+              </NavigationMenuLink>
+            </Link>
+          </NavigationMenuItem>
         </NavigationMenuList>
       </NavigationMenu>
       <div className="flex justify-center items-center gap-3">

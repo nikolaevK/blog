@@ -87,10 +87,13 @@ export default function PostCard({ post, user }: PostCardInterface) {
                 </Button>
               ))}
           </div>
-          <div className="flex justify-center items-center text-muted-foreground gap-2">
-            <p>{wordCount} words.</p>
+          <div className="hidden md:flex justify-center items-center text-muted-foreground gap-2">
             <p>
-              {minutesToRead} {wordCount > 1 ? "minutes" : "minute"}
+              {wordCount} {wordCount > 1 ? "words" : "word"}.
+            </p>
+            <p>
+              {minutesToRead}{" "}
+              {minutesToRead > 1 ? "minutes read" : "minute read"}
             </p>
           </div>
         </CardFooter>

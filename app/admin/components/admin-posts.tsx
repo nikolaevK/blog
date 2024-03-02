@@ -21,7 +21,7 @@ export default async function AdminPosts() {
   ]);
 
   return (
-    <div className="flex flex-col gap-4 px-6">
+    <div className="flex flex-col gap-4 px-4">
       {posts.map((post) => (
         <PostCard post={post} user={user!} key={post.id} />
       ))}
