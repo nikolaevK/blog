@@ -15,6 +15,10 @@ interface PostCardInterface {
 export default function PostCard({ post, user }: PostCardInterface) {
   const { userId } = auth();
   const admin = userId === user.id;
+
+  const wordCount = post?.content?.trim().split(/\s+/g).length;
+  const minutesToRead = Number((wordCount / 100 + 1).toFixed(0));
+
   return (
     <Card className="w-full">
       <CardContent className="p-6">
@@ -56,7 +60,7 @@ export default function PostCard({ post, user }: PostCardInterface) {
         </div>
       </CardContent>
       <div className="border-t border-gray-200 dark:border-gray-800">
-        <CardFooter className="p-6">
+        <CardFooter className="flex justify-between p-6">
           <div className="flex items-center space-x-2">
             <Link href={`/${user.userName}/${post.slug}`}>
               <Button>Read</Button>
@@ -82,6 +86,12 @@ export default function PostCard({ post, user }: PostCardInterface) {
                   Unpublished
                 </Button>
               ))}
+          </div>
+          <div className="flex justify-center items-center text-muted-foreground gap-2">
+            <p>{wordCount} words.</p>
+            <p>
+              {minutesToRead} {wordCount > 1 ? "minutes" : "minute"}
+            </p>
           </div>
         </CardFooter>
       </div>

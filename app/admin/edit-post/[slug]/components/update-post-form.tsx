@@ -20,7 +20,10 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
-import { createPost } from "@/app/actions/createPost";
+
+import { Post } from "@prisma/client";
+import { updatePost } from "@/app/actions/updatePost";
+import Link from "next/link";
 import { toast } from "@/components/ui/use-toast";
 
 const formSchema = z.object({
@@ -39,33 +42,36 @@ const formSchema = z.object({
   published: z.boolean(),
 });
 
-export type CreatePostFormType = z.infer<typeof formSchema>;
+export type UpdatePostFormType = z.infer<typeof formSchema>;
 
-type Props = {};
-
-export default function CreatePostForm({}: Props) {
+export default function UpdatePostForm({ post }: { post: Post }) {
   const [preview, setPreview] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const form = useForm<CreatePostFormType>({
+  const form = useForm<UpdatePostFormType>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      title: "",
-      content: "",
+      title: post.title,
+      content: post.content,
       images: [],
-      published: false,
+      published: post.published,
     },
     mode: "onChange",
   });
 
-  async function submitPost(fields: CreatePostFormType) {
+  async function submitPost(fields: UpdatePostFormType) {
     try {
       setLoading(true);
-      await createPost(fields);
+      await updatePost({
+        ...fields,
+        postId: post.id,
+        username: post.username,
+        postUserId: post.userId,
+      });
       setLoading(false);
     } catch (error) {
       toast({
-        description: "Something went wrong while creating post",
+        description: "Something went wrong while updating post",
         variant: "destructive",
       });
       console.log(error);
@@ -181,8 +187,27 @@ export default function CreatePostForm({}: Props) {
           >
             {preview ? "Edit" : "Preview"}
           </Button>
+          <Link href={"/admin"}>
+            <Button
+              type="button"
+              variant={"secondary"}
+              className="w-full"
+              disabled={loading}
+            >
+              Cancel
+            </Button>
+          </Link>
           <Button className="w-full" disabled={loading}>
-            Post
+            Update
+          </Button>
+          {/* TODO: Write a function that deletes posts and comments together */}
+          <Button
+            type="button"
+            variant={"destructive"}
+            className="w-full"
+            disabled={loading}
+          >
+            Delete
           </Button>
         </div>
       </form>
