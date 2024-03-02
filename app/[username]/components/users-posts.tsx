@@ -1,8 +1,19 @@
 import PostCard from "@/components/ui/post-card";
-import { Post, User } from "@prisma/client";
+import { Post, Prisma, User } from "@prisma/client";
+
+type PostWithLikeCount = Prisma.PostGetPayload<{
+  include: {
+    user: true;
+    _count: {
+      select: {
+        likes: true;
+      };
+    };
+  };
+}>;
 
 interface UsersPostsInterface {
-  posts: Post[];
+  posts: PostWithLikeCount[];
   user: User;
 }
 

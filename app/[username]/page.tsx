@@ -19,19 +19,25 @@ export default async function UsersPage({
 }: {
   params: { username: string };
 }) {
-  const [posts, user] = await Promise.all([
-    await prismadb.post.findMany({
-      where: {
-        username,
-        published: true,
+  const posts = await prismadb.post.findMany({
+    where: {
+      username,
+      published: true,
+    },
+    orderBy: {
+      createdAt: "desc",
+    },
+    include: {
+      user: true,
+      _count: {
+        select: {
+          likes: true,
+        },
       },
-    }),
-    prismadb.user.findFirst({
-      where: {
-        userName: username,
-      },
-    }),
-  ]);
+    },
+  });
+
+  const user = posts[0]?.user;
 
   if (!user) return <div>{`${username} does not exist`}</div>;
 

@@ -7,20 +7,37 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { format } from "date-fns";
-import { Post, User } from "@prisma/client";
+import { Post, Prisma, User } from "@prisma/client";
 
 import ReactMarkdown from "react-markdown";
 import { HeartIcon, MessageCircleIcon } from "lucide-react";
 import Image from "next/image";
 import { Separator } from "@/components/ui/separator";
 import Link from "next/link";
+import { auth } from "@clerk/nextjs";
+import LikesAndComments from "./likes-and-comments";
+
+type PostWithLikes = Prisma.PostGetPayload<{
+  include: {
+    likes: true;
+    user: true;
+    _count: {
+      select: {
+        likes: true;
+      };
+    };
+  };
+}>;
 
 interface BlogPostInterface {
-  post: Post;
+  post: PostWithLikes;
   user: User;
 }
 
 export default function BlogPost({ post, user }: BlogPostInterface) {
+  const { userId } = auth();
+  const liked = !!post.likes.find((like) => like.userId === userId);
+
   return (
     <section className="p-6 ">
       <Card>
@@ -61,12 +78,13 @@ export default function BlogPost({ post, user }: BlogPostInterface) {
           </ReactMarkdown>
         </CardContent>
         <CardFooter>
-          <div className="flex items-center space-x-2 text-sm">
-            <HeartIcon className="w-4 h-4 text-red-600" fill="red" />
-            <span>12 Likes</span>
-            <MessageCircleIcon className="w-4 h-4" />
-            <span>5 Comments</span>
-          </div>
+          <LikesAndComments
+            liked={liked}
+            countLikes={post._count.likes}
+            username={user.userName}
+            slug={post.slug}
+            postId={post.id}
+          />
         </CardFooter>
       </Card>
     </section>

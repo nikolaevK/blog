@@ -21,6 +21,7 @@ model User {
   description String? @db.VarChar(150)
   linkedInLink String? @db.VarChar(50)
   githubLink String? @db.VarChar(50)
+  likes Like[] @relation("LikeToUserRelationship")
   posts Post[] @relation("PostToUserRelationship")
   createdAt DateTime @default(now())
   updatedAt   DateTime  @updatedAt
@@ -35,10 +36,22 @@ model Post {
   slug String
   title String
   username String
+  likes Like[] @relation("LikeToPostRelationship")
   userId  String
   user User @relation("PostToUserRelationship", fields: [userId], references: [id])
   createdAt DateTime @default(now())
   updatedAt   DateTime  @updatedAt
 
   @@index([userId ])
+}
+
+model Like {
+  id String @id @default(uuid())
+  postId String 
+  post Post @relation("LikeToPostRelationship", fields: [postId], references: [id])
+  userId String
+  user User @relation("LikeToUserRelationship", fields: [userId], references: [id])
+
+  @@index([postId])
+  @@index([userId])
 }

@@ -1,5 +1,5 @@
 import { auth } from "@clerk/nextjs";
-import { Post, User } from "@prisma/client";
+import { Post, Prisma, User } from "@prisma/client";
 import { formatRelative } from "date-fns";
 import { CalendarIcon, HeartIcon, MessageCircleIcon } from "lucide-react";
 import Image from "next/image";
@@ -7,8 +7,19 @@ import Link from "next/link";
 import { Button } from "./button";
 import { Card, CardContent, CardFooter } from "./card";
 
+type PostWithLikeCount = Prisma.PostGetPayload<{
+  include: {
+    user: true;
+    _count: {
+      select: {
+        likes: true;
+      };
+    };
+  };
+}>;
+
 interface PostCardInterface {
-  post: Post;
+  post: PostWithLikeCount;
   user: User;
 }
 
@@ -52,8 +63,15 @@ export default function PostCard({ post, user }: PostCardInterface) {
           </Link>
 
           <div className="flex items-center space-x-2 text-sm">
-            <HeartIcon className="w-4 h-4" />
-            <span>12 Likes</span>
+            <Link
+              href={`/${user.userName}/${post.slug}`}
+              className="flex justify-center items-center gap-1"
+            >
+              <HeartIcon className="w-4 h-4" />
+              <span>
+                {post._count.likes} {post._count.likes === 1 ? "like" : "likes"}
+              </span>
+            </Link>
             <MessageCircleIcon className="w-4 h-4" />
             <span>5 Comments</span>
           </div>

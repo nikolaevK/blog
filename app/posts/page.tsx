@@ -19,6 +19,11 @@ export default async function PostsPage() {
     },
     include: {
       user: true,
+      _count: {
+        select: {
+          likes: true,
+        },
+      },
     },
   });
 

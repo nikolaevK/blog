@@ -6,26 +6,28 @@ export default async function PostPage({
 }: {
   params: { username: string; slug: string };
 }) {
-  const [post, user] = await Promise.all([
-    await prismadb.post.findFirst({
-      where: {
-        slug,
-        username,
+  const post = await prismadb.post.findFirst({
+    where: {
+      slug,
+      username,
+    },
+    include: {
+      user: true,
+      likes: true,
+      _count: {
+        select: {
+          likes: true,
+        },
       },
-    }),
-    await prismadb.user.findFirst({
-      where: {
-        userName: username,
-      },
-    }),
-  ]);
+    },
+  });
 
-  if (!post || !user)
+  if (!post || !post.user)
     return <div>{`${username} or ${slug} post does not exist`}</div>;
 
   return (
     <div className="mb-12 md:mb-0">
-      <BlogPost post={post} user={user} />
+      <BlogPost post={post} user={post.user} />
     </div>
   );
 }
