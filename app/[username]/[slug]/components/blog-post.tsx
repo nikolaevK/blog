@@ -1,16 +1,13 @@
 import {
   Card,
   CardContent,
-  CardDescription,
   CardFooter,
   CardHeader,
-  CardTitle,
 } from "@/components/ui/card";
 import { format } from "date-fns";
-import { Post, Prisma, User } from "@prisma/client";
+import { Prisma, User } from "@prisma/client";
 
 import ReactMarkdown from "react-markdown";
-import { HeartIcon, MessageCircleIcon } from "lucide-react";
 import Image from "next/image";
 import { Separator } from "@/components/ui/separator";
 import Link from "next/link";
@@ -21,9 +18,11 @@ type PostWithLikes = Prisma.PostGetPayload<{
   include: {
     likes: true;
     user: true;
+    comments: true;
     _count: {
       select: {
         likes: true;
+        comments: true;
       };
     };
   };
@@ -39,7 +38,7 @@ export default function BlogPost({ post, user }: BlogPostInterface) {
   const liked = !!post.likes.find((like) => like.userId === userId);
 
   return (
-    <section className="p-6 ">
+    <section className="p-6">
       <Card>
         <CardHeader>
           <div className="space-y-6">
@@ -81,6 +80,7 @@ export default function BlogPost({ post, user }: BlogPostInterface) {
           <LikesAndComments
             liked={liked}
             countLikes={post._count.likes}
+            commentCount={post._count.comments}
             username={user.userName}
             slug={post.slug}
             postId={post.id}

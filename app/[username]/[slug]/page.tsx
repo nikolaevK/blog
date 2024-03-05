@@ -1,5 +1,6 @@
 import prismadb from "@/lib/prismadb";
 import BlogPost from "./components/blog-post";
+import CommentsSection from "./components/comments-section";
 
 export default async function PostPage({
   params: { username, slug },
@@ -14,9 +15,12 @@ export default async function PostPage({
     include: {
       user: true,
       likes: true,
+      comments: true,
+
       _count: {
         select: {
           likes: true,
+          comments: true,
         },
       },
     },
@@ -26,8 +30,9 @@ export default async function PostPage({
     return <div>{`${username} or ${slug} post does not exist`}</div>;
 
   return (
-    <div className="mb-12 md:mb-0">
+    <div className="mb-16">
       <BlogPost post={post} user={post.user} />
+      <CommentsSection postId={post.id} />
     </div>
   );
 }

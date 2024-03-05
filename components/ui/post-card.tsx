@@ -53,7 +53,7 @@ export default function PostCard({ post, user }: PostCardInterface) {
                 </Link>
 
                 <span className="text-sm text-muted-foreground">
-                  {formatRelative(new Date(post.createdAt), new Date())}
+                  Posted {formatRelative(new Date(post.createdAt), new Date())}
                 </span>
               </div>
             </div>

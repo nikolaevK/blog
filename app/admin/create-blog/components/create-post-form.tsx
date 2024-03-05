@@ -105,7 +105,11 @@ export default function CreatePostForm({}: Props) {
             <FormItem className="mb-4">
               <FormLabel className="text-lg">Title of article</FormLabel>
               <FormControl>
-                <Input placeholder="write here" {...field} disabled={loading} />
+                <Input
+                  placeholder="Shortly describe an article"
+                  {...field}
+                  disabled={loading}
+                />
               </FormControl>
               <FormDescription>
                 This is going to be title of an article.

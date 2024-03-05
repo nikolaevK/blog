@@ -22,6 +22,7 @@ model User {
   linkedInLink String? @db.VarChar(50)
   githubLink String? @db.VarChar(50)
   likes Like[] @relation("LikeToUserRelationship")
+  comments Comment[] @relation("CommentToUserRelationship")
   posts Post[] @relation("PostToUserRelationship")
   createdAt DateTime @default(now())
   updatedAt   DateTime  @updatedAt
@@ -30,13 +31,12 @@ model User {
 model Post {
   id String   @id @default(uuid())
   content String @db.VarChar(2500)
-  commentCount Int @default(0)
-  heartCount Int @default(0)
   published Boolean
   slug String
   title String
   username String
   likes Like[] @relation("LikeToPostRelationship")
+  comments Comment[] @relation("CommentToPostRelationship")
   userId  String
   user User @relation("PostToUserRelationship", fields: [userId], references: [id])
   createdAt DateTime @default(now())
@@ -54,4 +54,20 @@ model Like {
 
   @@index([postId])
   @@index([userId])
+}
+
+model Comment {
+  id String @id @default(uuid())
+  postId String 
+  post Post @relation("CommentToPostRelationship", fields: [postId], references: [id])
+  userId String
+  user User @relation("CommentToUserRelationship", fields: [userId], references: [id])
+  comment String @db.VarChar(1500)
+  photoUrl String
+  username String
+  createdAt DateTime @default(now())
+  updatedAt   DateTime  @updatedAt
+
+   @@index([postId])
+   @@index([userId])
 }

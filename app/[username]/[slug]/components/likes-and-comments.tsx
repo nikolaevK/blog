@@ -13,16 +13,19 @@ interface LikesAndCommentsInterface {
   postId: string;
   slug: string;
   username: string;
+  commentCount: number;
 }
 
 export default function LikesAndComments({
   liked,
   countLikes,
+  commentCount,
   postId,
   slug,
   username,
 }: LikesAndCommentsInterface) {
   const { userId } = useAuth();
+
   async function updateCount() {
     try {
       await updateLike({ postId, username, slug });
@@ -37,7 +40,7 @@ export default function LikesAndComments({
   }
   return (
     <div className="flex items-center space-x-2 text-sm">
-      <div className="flex  items-center ">
+      <div className="flex items-center">
         {!userId && (
           <Link href="/sign-in">
             <HeartIcon
@@ -60,8 +63,12 @@ export default function LikesAndComments({
           {countLikes} {countLikes === 1 ? "like" : "likes"}
         </span>
       </div>
-      <MessageCircleIcon className="w-4 h-4" />
-      <span>5 Comments</span>
+      <div className="flex items-center gap-1">
+        <MessageCircleIcon className="w-4 h-4" />
+        <span className="pl-0">
+          {commentCount || 0} {commentCount === 1 ? "comment" : "comments"}
+        </span>
+      </div>
     </div>
   );
 }
