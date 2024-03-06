@@ -34,7 +34,13 @@ const FormSchema = z.object({
 
 type CommentType = z.infer<typeof FormSchema>;
 
-export function SendCommentForm({ postId }: { postId: string }) {
+export function SendCommentForm({
+  postId,
+  setOpen,
+}: {
+  postId: string;
+  setOpen: (n: boolean) => void;
+}) {
   const [openEmojiModal, setOpenEmojiModal] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -50,6 +56,7 @@ export function SendCommentForm({ postId }: { postId: string }) {
       await createComment({ postId, comment: data.comment });
       form.reset();
       setLoading(false);
+      setOpen(false);
     } catch (error) {
       console.log(error);
       toast({

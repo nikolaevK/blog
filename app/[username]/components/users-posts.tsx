@@ -7,6 +7,7 @@ type PostWithLikeCount = Prisma.PostGetPayload<{
     _count: {
       select: {
         likes: true;
+        comments: true;
       };
     };
   };

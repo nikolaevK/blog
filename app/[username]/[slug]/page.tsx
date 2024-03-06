@@ -15,7 +15,11 @@ export default async function PostPage({
     include: {
       user: true,
       likes: true,
-      comments: true,
+      comments: {
+        orderBy: {
+          createdAt: "desc",
+        },
+      },
 
       _count: {
         select: {
@@ -32,7 +36,7 @@ export default async function PostPage({
   return (
     <div className="mb-16">
       <BlogPost post={post} user={post.user} />
-      <CommentsSection postId={post.id} />
+      <CommentsSection postId={post.id} comments={post.comments} />
     </div>
   );
 }

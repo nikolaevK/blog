@@ -48,7 +48,7 @@ export function CommentDialog({
           </Button>
         </DialogTrigger>
         <DialogContent className="sm:max-w-[425px]">
-          <SendCommentForm postId={postId} />
+          <SendCommentForm postId={postId} setOpen={setOpen} />
         </DialogContent>
       </Dialog>
     );
@@ -62,7 +62,7 @@ export function CommentDialog({
         </Button>
       </DrawerTrigger>
       <DrawerContent>
-        <SendCommentForm postId={postId} />
+        <SendCommentForm postId={postId} setOpen={setOpen} />
         <DrawerFooter className="pt-2">
           <DrawerClose asChild>
             <Button variant="outline">Cancel</Button>

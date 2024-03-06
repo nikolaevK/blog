@@ -22,6 +22,7 @@ export default async function PostsPage() {
       _count: {
         select: {
           likes: true,
+          comments: true,
         },
       },
     },

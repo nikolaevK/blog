@@ -32,6 +32,7 @@ export default async function UsersPage({
       _count: {
         select: {
           likes: true,
+          comments: true,
         },
       },
     },

@@ -13,6 +13,7 @@ type PostWithLikeCount = Prisma.PostGetPayload<{
     _count: {
       select: {
         likes: true;
+        comments: true;
       };
     };
   };
@@ -64,7 +65,7 @@ export default function PostCard({ post, user }: PostCardInterface) {
 
           <div className="flex items-center space-x-2 text-sm">
             <Link
-              href={`/${user.userName}/${post.slug}`}
+              href={`/${user.userName}/${post.slug}#comments`}
               className="flex justify-center items-center gap-1"
             >
               <HeartIcon className="w-4 h-4" />
@@ -72,8 +73,16 @@ export default function PostCard({ post, user }: PostCardInterface) {
                 {post._count.likes} {post._count.likes === 1 ? "like" : "likes"}
               </span>
             </Link>
-            <MessageCircleIcon className="w-4 h-4" />
-            <span>5 Comments</span>
+            <Link
+              href={`/${user.userName}/${post.slug}#comments`}
+              className="flex gap-1 justify-center items-center"
+            >
+              <MessageCircleIcon className="w-4 h-4" />
+              <span>
+                {post._count.comments}{" "}
+                {post._count.comments === 1 ? "comment" : "comments"}
+              </span>
+            </Link>
           </div>
         </div>
       </CardContent>
