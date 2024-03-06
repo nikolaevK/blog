@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/card";
 import PostCard from "@/components/ui/post-card";
 import prismadb from "@/lib/prismadb";
+import { Post, Prisma } from "@prisma/client";
 
 export default async function PostsPage() {
   const posts = await prismadb.post.findMany({
@@ -36,9 +37,15 @@ export default async function PostsPage() {
           <CardDescription>Users published posts</CardDescription>
         </CardHeader>
         <CardContent className="flex flex-col gap-4 px-3 md:px-6">
-          {posts.map((post) => (
-            <PostCard post={post} user={post.user} key={post.id} />
-          ))}
+          {posts.length > 0 ? (
+            posts.map((post) => (
+              <PostCard post={post} user={post.user} key={post.id} />
+            ))
+          ) : (
+            <div className="text-center text-muted-foreground">
+              No posts yet...
+            </div>
+          )}
         </CardContent>
       </Card>
     </div>

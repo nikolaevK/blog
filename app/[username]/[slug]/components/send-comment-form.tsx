@@ -1,13 +1,13 @@
 "use client";
 
-import data from "@emoji-mart/data";
-import Picker from "@emoji-mart/react";
-
+import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-import { Button } from "@/components/ui/button";
+import data from "@emoji-mart/data";
+import Picker from "@emoji-mart/react";
+
 import {
   Form,
   FormControl,
@@ -17,11 +17,11 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Textarea } from "@/components/ui/textarea";
+import { Button } from "@/components/ui/button";
 import { toast } from "@/components/ui/use-toast";
-import { useTheme } from "next-themes";
-import { useState } from "react";
-import { Smile } from "lucide-react";
 import { createComment } from "@/app/actions/createComment";
+import { useTheme } from "next-themes";
+import { Smile } from "lucide-react";
 
 const FormSchema = z.object({
   comment: z

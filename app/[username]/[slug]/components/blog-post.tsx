@@ -1,18 +1,20 @@
+import { format } from "date-fns";
+import { Prisma, User } from "@prisma/client";
+import { auth } from "@clerk/nextjs";
+
+import Image from "next/image";
+import Link from "next/link";
+
 import {
   Card,
   CardContent,
   CardFooter,
   CardHeader,
 } from "@/components/ui/card";
-import { format } from "date-fns";
-import { Prisma, User } from "@prisma/client";
-
-import ReactMarkdown from "react-markdown";
-import Image from "next/image";
 import { Separator } from "@/components/ui/separator";
-import Link from "next/link";
-import { auth } from "@clerk/nextjs";
+
 import LikesAndComments from "./likes-and-comments";
+import ReactMarkdown from "react-markdown";
 
 type PostWithLikes = Prisma.PostGetPayload<{
   include: {

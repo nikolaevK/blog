@@ -1,44 +1,39 @@
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
 
-import PostCard from "@/components/ui/post-card";
 import prismadb from "@/lib/prismadb";
 import UserProfile from "./components/user-profile";
 import UsersPosts from "./components/users-posts";
-
-type Props = {};
 
 export default async function UsersPage({
   params: { username },
 }: {
   params: { username: string };
 }) {
-  const posts = await prismadb.post.findMany({
-    where: {
-      username,
-      published: true,
-    },
-    orderBy: {
-      createdAt: "desc",
-    },
-    include: {
-      user: true,
-      _count: {
-        select: {
-          likes: true,
-          comments: true,
+  const [user, posts] = await Promise.all([
+    await prismadb.user.findFirst({
+      where: {
+        userName: username,
+      },
+    }),
+    await prismadb.post.findMany({
+      where: {
+        username,
+        published: true,
+      },
+      orderBy: {
+        createdAt: "desc",
+      },
+      include: {
+        user: true,
+        _count: {
+          select: {
+            likes: true,
+            comments: true,
+          },
         },
       },
-    },
-  });
-
-  const user = posts[0]?.user;
+    }),
+  ]);
 
   if (!user) return <div>{`${username} does not exist`}</div>;
 

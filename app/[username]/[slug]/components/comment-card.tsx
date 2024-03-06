@@ -1,16 +1,18 @@
 "use client";
 
-import { CardContent, Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import { useState } from "react";
+import { useAuth } from "@clerk/nextjs";
 import { Comment } from "@prisma/client";
 import { formatRelative } from "date-fns";
+
 import Image from "next/image";
 import Link from "next/link";
-import { DeleteIcon } from "lucide-react";
-import { useAuth } from "@clerk/nextjs";
+
+import { CardContent, Card } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import { deleteComment } from "@/app/actions/deleteComment";
-import { useState } from "react";
 import { toast } from "@/components/ui/use-toast";
+import { DeleteIcon } from "lucide-react";
 
 interface CommentCardInterface {
   comment: Comment;
@@ -41,6 +43,7 @@ export default function CommentCard({ comment }: CommentCardInterface) {
       });
     }
   }
+
   return (
     <Card className="border w-full">
       <CardContent className="flex justify-between items-center p-4 md:p-6">

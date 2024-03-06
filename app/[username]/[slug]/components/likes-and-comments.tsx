@@ -1,11 +1,11 @@
 "use client";
 
+import { useAuth } from "@clerk/nextjs";
 import { updateLike } from "@/app/actions/updateLike";
+import Link from "next/link";
 
 import { toast } from "@/components/ui/use-toast";
-import { useAuth } from "@clerk/nextjs";
 import { HeartIcon, MessageCircleIcon } from "lucide-react";
-import Link from "next/link";
 
 interface LikesAndCommentsInterface {
   liked: boolean;

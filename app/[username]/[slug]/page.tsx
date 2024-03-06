@@ -30,8 +30,7 @@ export default async function PostPage({
     },
   });
 
-  if (!post || !post.user)
-    return <div>{`${username} or ${slug} post does not exist`}</div>;
+  if (!post) return <div>{`${slug} post does not exist`}</div>;
 
   return (
     <div className="mb-16">

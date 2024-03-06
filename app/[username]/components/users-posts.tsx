@@ -1,5 +1,5 @@
 import PostCard from "@/components/ui/post-card";
-import { Post, Prisma, User } from "@prisma/client";
+import { Prisma, User } from "@prisma/client";
 
 type PostWithLikeCount = Prisma.PostGetPayload<{
   include: {

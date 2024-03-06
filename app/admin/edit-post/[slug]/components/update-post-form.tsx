@@ -25,6 +25,7 @@ import { Post } from "@prisma/client";
 import { updatePost } from "@/app/actions/updatePost";
 import Link from "next/link";
 import { toast } from "@/components/ui/use-toast";
+import { deletePost } from "@/app/actions/deletePost";
 
 const formSchema = z.object({
   title: z.string().min(5, {
@@ -74,6 +75,28 @@ export default function UpdatePostForm({ post }: { post: Post }) {
         description: "Something went wrong while updating post",
         variant: "destructive",
       });
+      setLoading(false);
+      console.log(error);
+    }
+  }
+
+  async function onDelete() {
+    try {
+      setLoading(true);
+      await deletePost({
+        postId: post.id,
+        postUserId: post.userId,
+      });
+      setLoading(false);
+      toast({
+        description: "Post deleted successfully.",
+      });
+    } catch (error) {
+      toast({
+        description: "Something went wrong while updating post",
+        variant: "destructive",
+      });
+      setLoading(false);
       console.log(error);
     }
   }
@@ -200,12 +223,12 @@ export default function UpdatePostForm({ post }: { post: Post }) {
           <Button className="w-full" disabled={loading}>
             Update
           </Button>
-          {/* TODO: Write a function that deletes posts and comments together */}
           <Button
             type="button"
             variant={"destructive"}
             className="w-full"
             disabled={loading}
+            onClick={onDelete}
           >
             Delete
           </Button>

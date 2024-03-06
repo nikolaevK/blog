@@ -1,7 +1,6 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import { useEffect, useState } from "react";
 
 import {
   Drawer,
@@ -10,10 +9,10 @@ import {
   DrawerFooter,
   DrawerTrigger,
 } from "@/components/ui/drawer";
-
-import { PlusSquareIcon } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { SendCommentForm } from "./send-comment-form";
-import { useEffect, useState } from "react";
+import { PlusSquareIcon } from "lucide-react";
 
 type Dimensions = { width: number; height: number };
 
