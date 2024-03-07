@@ -25,7 +25,11 @@ export function CreateNameCard() {
 
   async function submitUser(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    if (isValid) await createUser(usernameValue);
+    if (isValid) {
+      setLoading(true);
+      await createUser(usernameValue);
+      setLoading(false);
+    }
   }
 
   function createUserName(e: React.ChangeEvent<HTMLInputElement>) {
