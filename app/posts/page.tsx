@@ -8,7 +8,6 @@ import {
 } from "@/components/ui/card";
 import PostCard from "@/components/ui/post-card";
 import prismadb from "@/lib/prismadb";
-import { Post, Prisma } from "@prisma/client";
 
 export default async function PostsPage() {
   const posts = await prismadb.post.findMany({
@@ -20,12 +19,6 @@ export default async function PostsPage() {
     },
     include: {
       user: true,
-      _count: {
-        select: {
-          likes: true,
-          comments: true,
-        },
-      },
     },
   });
 

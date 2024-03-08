@@ -29,8 +29,8 @@ interface ProfileSectionInterface {
 }
 
 const formSchema = z.object({
-  description: z.string().max(150, {
-    message: "Description can be no longer than 75 characters",
+  description: z.string().max(1000, {
+    message: "Description can be no longer than 1000 characters",
   }),
   linkedInLink: z.string(),
   githubLink: z.string(),

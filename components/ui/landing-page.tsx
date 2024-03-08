@@ -1,9 +1,7 @@
 import Link from "next/link";
 import React from "react";
 
-type Props = {};
-
-export default function LandingPage({}: Props) {
+export default function LandingPage() {
   return (
     <div className="flex flex-col min-h-[100dvh]">
       <main className="flex flex-col gap-2">
@@ -12,10 +10,10 @@ export default function LandingPage({}: Props) {
             <div className="flex flex-col items-center justify-center space-y-4 text-center">
               <div className="space-y-2">
                 <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl">
-                  The Acme Blog
+                  Konstantin's Blog
                 </h1>
                 <p className="mx-auto max-w-[600px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">
-                  The latest news, tips, and insights from the Acme team.
+                  The latest news, tips, and insights from the blog platform.
                 </p>
               </div>
             </div>
@@ -25,54 +23,53 @@ export default function LandingPage({}: Props) {
           <div className="container grid items-center gap-4 px-4 md:px-6">
             <Link
               className="grid gap-2 p-4 rounded-lg border border-gray-200 hover:shadow-md transition-colors  dark:border-gray-800 dark:hover:shadow-md"
-              href="#"
+              href="/kostya/building-a-dynamic-blogging-platform-with-next-js-sql-turso-shadcn-ui-prisma-orm-and-type-script"
             >
               <div className="space-y-2">
                 <h3 className="text-xl font-bold">
-                  Introducing the Acme Web Platform
+                  Introducing the Blog Web Platform
                 </h3>
                 <p className="text-sm text-gray-500 dark:text-gray-400">
                   Posted on June 24, 2023
                 </p>
               </div>
               <p className="text-sm text-gray-500 dark:text-gray-400">
-                The complete platform for building the Web. Securely build,
-                deploy, and scale the best web experiences.
+                The complete platform for posting and sharing on the Web.
+                Securely post, manage, and share your knowledge.
               </p>
             </Link>
             <Link
               className="grid gap-2 p-4 rounded-lg border border-gray-200  hover:shadow-md transition-colors  dark:border-gray-800 dark:hover:shadow-md"
-              href="#"
+              href="https://www.markdownguide.org/getting-started/#why-use-markdown"
             >
               <div className="space-y-2">
                 <h3 className="text-xl font-bold">
-                  The Future of Jamstack: Real-time Everything
+                  Write and Edit in Markdown
                 </h3>
                 <p className="text-sm text-gray-500 dark:text-gray-400">
                   Posted on June 17, 2023
                 </p>
               </div>
               <p className="text-sm text-gray-500 dark:text-gray-400">
-                Let your team focus on shipping features instead of managing
-                infrastructure with automated CI/CD.
+                Markdown is a lightweight markup language that you can use to
+                add formatting elements to plaintext text documents. Created by
+                John Gruber in 2004, Markdown is now one of the world’s most
+                popular markup languages.
               </p>
             </Link>
             <Link
               className="grid gap-2 p-4 rounded-lg border border-gray-200 hover:shadow-md transition-colors  dark:border-gray-800 dark:hover:shadow-md"
-              href="#"
+              href="/kostya/getting-started-with-markdown"
             >
               <div className="space-y-2">
-                <h3 className="text-xl font-bold">
-                  The Rise of Edge Computing: Bringing Compute Closer to Users
-                </h3>
+                <h3 className="text-xl font-bold">Getting Started</h3>
                 <p className="text-sm text-gray-500 dark:text-gray-400">
                   Posted on June 10, 2023
                 </p>
               </div>
               <p className="text-sm text-gray-500 dark:text-gray-400">
-                The platform for rapid progress. Let your team focus on shipping
-                features instead of managing infrastructure with automated
-                CI/CD.
+                An overview of Markdown, how it works, and what you can do with
+                it.
               </p>
             </Link>
           </div>
@@ -80,7 +77,7 @@ export default function LandingPage({}: Props) {
       </main>
       <footer className="flex flex-col gap-2 sm:flex-row py-6 w-full shrink-0 items-center px-4 md:px-6 border-t">
         <p className="text-xs text-gray-500 dark:text-gray-400">
-          © 2024 Acme Inc. All rights reserved.
+          © 2024 Blog Inc. All rights reserved.
         </p>
         <nav className="sm:ml-auto flex gap-4 sm:gap-6">
           <Link className="text-xs hover:underline underline-offset-4" href="#">

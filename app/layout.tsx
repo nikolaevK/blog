@@ -8,8 +8,6 @@ import "./globals.css";
 import { cn } from "@/lib/utils";
 import { ThemeProvider } from "@/components/ui/theme-provider";
 import { NavBar } from "@/components/ui/nav-bar";
-import authenticate from "./actions/authenticate";
-import { redirect } from "next/navigation";
 
 export const fontSans = FontSans({
   subsets: ["latin"],

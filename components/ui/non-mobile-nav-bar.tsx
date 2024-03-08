@@ -36,31 +36,48 @@ export default function NonMobileNavBar({
                   <NavigationMenuLink asChild>
                     <a
                       className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
-                      href="/"
+                      href="/kostya/building-a-dynamic-blogging-platform-with-next-js-sql-turso-shadcn-ui-prisma-orm-and-type-script"
                     >
                       {/* <Icons.logo className="h-6 w-6" /> */}
                       <div className="mb-2 mt-4 text-lg font-medium">
-                        shadcn/ui
+                        The Platform
                       </div>
                       <p className="text-sm leading-tight text-muted-foreground">
-                        Beautifully designed components that you can copy and
-                        paste into your apps. Accessible. Customizable. Open
-                        Source.
+                        Building a Dynamic Blogging Platform with Next.js, SQL,
+                        Turso, shadcn/ui, Prisma ORM, and TypeScript.
                       </p>
                     </a>
                   </NavigationMenuLink>
                 </li>
-                <ListItem href="/docs" title="Introduction">
-                  Re-usable components built using Radix UI and Tailwind CSS.
+                <ListItem
+                  href="/kostya/getting-started-with-markdown"
+                  title="How To Use"
+                >
+                  Learn how to write your first blog post.
                 </ListItem>
-                <ListItem href="/docs/installation" title="Installation">
+                <ListItem
+                  href="https://www.markdownguide.org/getting-started/#why-use-markdown"
+                  title="Markdown"
+                >
                   How to install dependencies and structure your app.
-                </ListItem>
-                <ListItem href="/docs/primitives/typography" title="Typography">
-                  Styles for headings, paragraphs, lists...etc
                 </ListItem>
               </ul>
             </NavigationMenuContent>
+          </NavigationMenuItem>
+
+          <NavigationMenuItem>
+            <Link href="/" legacyBehavior passHref>
+              <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                Home
+              </NavigationMenuLink>
+            </Link>
+          </NavigationMenuItem>
+          <NavigationMenuItem>
+            <Link href="/posts" legacyBehavior passHref>
+              <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                Posts
+              </NavigationMenuLink>
+            </Link>
           </NavigationMenuItem>
           {authorized && (
             <NavigationMenuItem>
@@ -71,13 +88,6 @@ export default function NonMobileNavBar({
               </Link>
             </NavigationMenuItem>
           )}
-          <NavigationMenuItem>
-            <Link href="/posts" legacyBehavior passHref>
-              <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                Posts
-              </NavigationMenuLink>
-            </Link>
-          </NavigationMenuItem>
         </NavigationMenuList>
       </NavigationMenu>
       <div className="flex justify-center items-center gap-3">

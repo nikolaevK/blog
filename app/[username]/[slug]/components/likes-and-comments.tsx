@@ -6,6 +6,7 @@ import Link from "next/link";
 
 import { toast } from "@/components/ui/use-toast";
 import { HeartIcon, MessageCircleIcon } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 interface LikesAndCommentsInterface {
   liked: boolean;
@@ -14,6 +15,7 @@ interface LikesAndCommentsInterface {
   slug: string;
   username: string;
   commentCount: number;
+  userStillExists: boolean;
 }
 
 export default function LikesAndComments({
@@ -23,12 +25,18 @@ export default function LikesAndComments({
   postId,
   slug,
   username,
+  userStillExists,
 }: LikesAndCommentsInterface) {
   const { userId } = useAuth();
+  const router = useRouter();
 
   async function updateCount() {
     try {
-      await updateLike({ postId, username, slug });
+      if (userStillExists) {
+        await updateLike({ postId, username, slug });
+      } else {
+        router.push("/register");
+      }
     } catch (error) {
       console.log(error);
 
@@ -38,14 +46,17 @@ export default function LikesAndComments({
       });
     }
   }
+
   return (
     <div className="flex items-center space-x-2 text-sm">
       <div className="flex items-center">
         {!userId && (
           <Link href="/sign-in">
             <HeartIcon
-              className={`"w-4 h-4 ${liked ? "text-red-600" : "text-black"}`}
-              fill={liked ? "red" : "white"}
+              className={`"w-4 h-4 ${
+                liked && userStillExists ? "text-red-600" : "text-black"
+              }`}
+              fill={liked && userStillExists ? "red" : "white"}
             />
           </Link>
         )}
@@ -53,9 +64,9 @@ export default function LikesAndComments({
           <HeartIcon
             onClick={updateCount}
             className={`"w-4 h-4 ${
-              liked ? "text-red-600" : "text-black"
+              liked && userStillExists ? "text-red-600" : "text-black"
             } hover:cursor-pointer`}
-            fill={liked ? "red" : "white"}
+            fill={liked && userStillExists ? "red" : "white"}
           />
         )}
 

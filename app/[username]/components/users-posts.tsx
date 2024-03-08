@@ -4,12 +4,6 @@ import { Prisma, User } from "@prisma/client";
 type PostWithLikeCount = Prisma.PostGetPayload<{
   include: {
     user: true;
-    _count: {
-      select: {
-        likes: true;
-        comments: true;
-      };
-    };
   };
 }>;
 

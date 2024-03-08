@@ -39,8 +39,8 @@ export default function UserProfile({ user }: UserProfileInterface) {
                 <GithubIcon className="h-5 md:h-7 w-5 md:w-7" />
               </Link>
             )}
-            {user.githubLink !== null && user.githubLink.length > 0 && (
-              <Link href={user.githubLink}>
+            {user.linkedInLink !== null && user.linkedInLink.length > 0 && (
+              <Link href={user.linkedInLink}>
                 <LinkedinIcon className="h-5 md:h-7 w-5 md:w-7 text-blue-500" />
               </Link>
             )}

@@ -2,7 +2,7 @@
 
 import { cn } from "@/lib/utils";
 import { UserButton } from "@clerk/nextjs";
-import { LayoutDashboard, ScrollText } from "lucide-react";
+import { HomeIcon, LayoutDashboard, ScrollText } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React from "react";
@@ -42,6 +42,16 @@ export default function MobileNavBar({ authorized }: { authorized: boolean }) {
 
       <section className="fixed block md:hidden bottom-0 w-full h-12 border-t z-10 bg-white dark:bg-secondary">
         <ul className="flex justify-between h-full items-center mx-6">
+          <Link href="/">
+            <HomeIcon
+              className={cn(
+                "h-8 w-8",
+                pathname === "/"
+                  ? "text-black dark:text-white"
+                  : "text-muted-foreground"
+              )}
+            />
+          </Link>
           <Link href="/posts">
             <ScrollText
               className={cn(

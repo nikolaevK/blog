@@ -27,23 +27,16 @@ const formSchema = z.object({
   title: z.string().min(5, {
     message: "Title needs to be at least 5 characters.",
   }),
-  content: z
-    .string()
-    .min(10, {
-      message: "Content should be at least 10 characters.",
-    })
-    .max(2460, {
-      message: "Content is limited to 2500 words.",
-    }),
+  content: z.string().min(10, {
+    message: "Content should be at least 10 characters.",
+  }),
   images: z.object({ url: z.string() }).array(),
   published: z.boolean(),
 });
 
 export type CreatePostFormType = z.infer<typeof formSchema>;
 
-type Props = {};
-
-export default function CreatePostForm({}: Props) {
+export default function CreatePostForm() {
   const [preview, setPreview] = useState(false);
   const [loading, setLoading] = useState(false);
 

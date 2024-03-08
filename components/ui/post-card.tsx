@@ -1,3 +1,4 @@
+import prismadb from "@/lib/prismadb";
 import { auth } from "@clerk/nextjs";
 import { Post, Prisma, User } from "@prisma/client";
 import { formatRelative } from "date-fns";
@@ -10,12 +11,6 @@ import { Card, CardContent, CardFooter } from "./card";
 type PostWithLikeCount = Prisma.PostGetPayload<{
   include: {
     user: true;
-    _count: {
-      select: {
-        likes: true;
-        comments: true;
-      };
-    };
   };
 }>;
 
@@ -24,7 +19,20 @@ interface PostCardInterface {
   user: User;
 }
 
-export default function PostCard({ post, user }: PostCardInterface) {
+export default async function PostCard({ post, user }: PostCardInterface) {
+  const [commentCount, likeCount] = await Promise.all([
+    await prismadb.comment.count({
+      where: {
+        postId: post.id,
+      },
+    }),
+    await prismadb.like.count({
+      where: {
+        postId: post.id,
+      },
+    }),
+  ]);
+
   const { userId } = auth();
   const admin = userId === user.id;
 
@@ -70,7 +78,7 @@ export default function PostCard({ post, user }: PostCardInterface) {
             >
               <HeartIcon className="w-4 h-4" />
               <span>
-                {post._count.likes} {post._count.likes === 1 ? "like" : "likes"}
+                {likeCount} {likeCount === 1 ? "like" : "likes"}
               </span>
             </Link>
             <Link
@@ -79,8 +87,7 @@ export default function PostCard({ post, user }: PostCardInterface) {
             >
               <MessageCircleIcon className="w-4 h-4" />
               <span>
-                {post._count.comments}{" "}
-                {post._count.comments === 1 ? "comment" : "comments"}
+                {commentCount} {commentCount === 1 ? "comment" : "comments"}
               </span>
             </Link>
           </div>

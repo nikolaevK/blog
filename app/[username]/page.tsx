@@ -25,12 +25,6 @@ export default async function UsersPage({
       },
       include: {
         user: true,
-        _count: {
-          select: {
-            likes: true,
-            comments: true,
-          },
-        },
       },
     }),
   ]);
@@ -38,7 +32,7 @@ export default async function UsersPage({
   if (!user) return <div>{`${username} does not exist`}</div>;
 
   return (
-    <section className="p-6 mb-8 md:mb-0">
+    <section className="p-2 md:p-6 mb-14 md:mb-0">
       <Card>
         <CardHeader>{user && <UserProfile user={user} />}</CardHeader>
         <CardContent>

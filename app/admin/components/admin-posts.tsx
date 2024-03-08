@@ -15,12 +15,6 @@ export default async function AdminPosts() {
     },
     include: {
       user: true,
-      _count: {
-        select: {
-          likes: true,
-          comments: true,
-        },
-      },
     },
   });
 

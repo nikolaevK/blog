@@ -15,6 +15,7 @@ import { Separator } from "@/components/ui/separator";
 
 import LikesAndComments from "./likes-and-comments";
 import ReactMarkdown from "react-markdown";
+import authenticate from "@/app/actions/authenticate";
 
 type PostWithLikes = Prisma.PostGetPayload<{
   include: {
@@ -35,8 +36,13 @@ interface BlogPostInterface {
   user: User;
 }
 
-export default function BlogPost({ post, user }: BlogPostInterface) {
+export default async function BlogPost({ post, user }: BlogPostInterface) {
   const { userId } = auth();
+
+  // In order to determine if user in db still exists
+  // user can have userId from auth but delete account with username in db
+  const userStillExists = await authenticate();
+
   const liked = !!post.likes.find((like) => like.userId === userId);
 
   return (
@@ -86,6 +92,7 @@ export default function BlogPost({ post, user }: BlogPostInterface) {
             username={user.userName}
             slug={post.slug}
             postId={post.id}
+            userStillExists={userStillExists}
           />
         </CardFooter>
       </Card>

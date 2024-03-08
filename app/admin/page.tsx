@@ -17,7 +17,7 @@ export default async function Admin() {
   });
   if (!user) return null;
   return (
-    <div className="w-full mb-16 md:mb-0">
+    <div className="w-full mb-16 ">
       <ProfileSection user={user} />
       <AdminPosts />
     </div>
