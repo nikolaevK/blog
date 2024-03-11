@@ -48,7 +48,7 @@ export default function CommentCard({ comment }: CommentCardInterface) {
     <Card className="border w-full">
       <CardContent className="flex justify-between items-center p-4 md:p-6">
         <div className="flex gap-4 ">
-          <div className="flex-shrink-0 flex items-center">
+          <div className="flex-shrink-0 flex items-start">
             <Image
               alt="Avatar"
               className="rounded-full"
@@ -78,7 +78,7 @@ export default function CommentCard({ comment }: CommentCardInterface) {
         {owner && (
           <Button
             size={"sm"}
-            className="p-2 md:p-4"
+            className="p-2 md:p-4 ml-2"
             onClick={onDelete}
             disabled={loading}
           >
