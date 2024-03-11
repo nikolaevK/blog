@@ -64,7 +64,7 @@ export function CreateNameCard() {
 
   useEffect(() => {
     checkUsername(usernameValue);
-  }, [usernameValue]);
+  }, [usernameValue, checkUsername]);
 
   return (
     <Card className="w-[350px] md:w-[600px]">

@@ -10,7 +10,7 @@ export default function LandingPage() {
             <div className="flex flex-col items-center justify-center space-y-4 text-center">
               <div className="space-y-2">
                 <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl">
-                  Konstantin's Blog
+                  Konstantin&apos;s Blog
                 </h1>
                 <p className="mx-auto max-w-[600px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">
                   The latest news, tips, and insights from the blog platform.
@@ -53,8 +53,8 @@ export default function LandingPage() {
               <p className="text-sm text-gray-500 dark:text-gray-400">
                 Markdown is a lightweight markup language that you can use to
                 add formatting elements to plaintext text documents. Created by
-                John Gruber in 2004, Markdown is now one of the world’s most
-                popular markup languages.
+                John Gruber in 2004, Markdown is now one of the world&apos;s
+                most popular markup languages.
               </p>
             </Link>
             <Link
